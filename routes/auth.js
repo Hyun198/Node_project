@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/auth');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares/login_logout');
+const { renderMain } = require('../controllers/page');
 
-router.get('/', (req, res) => {
+router.get('/register', (req, res) => {
     res.render('register');
 });
 
