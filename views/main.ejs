@@ -8,20 +8,29 @@
 </head>
 
 <body>
-    <a href="/auth">회원가입</a>
-    <a href="/auth/login">로그인</a>
-    <a href="/auth/logout">로그아웃</a>
-    <div class="form-container">
-        <form action="/create-post" method="POST">
-            <label for="title">제목:</label>
-            <input type="text" name="title" id="title" required>
+    <% if (username) { %>
+        <h1>
+            <%=username %>님! 환영합니다.
+        </h1>
+        <div class="form-container">
+            <form action="/create-post" method="POST">
+                <label for="title">제목:</label>
+                <input type="text" name="title" id="title" required>
 
-            <label for="desc">본문:</label>
-            <textarea name="desc" id="desc" required></textarea>
+                <label for="desc">본문:</label>
+                <textarea name="desc" id="desc" required></textarea>
 
-            <button type="submit">게시</button>
-        </form>
-    </div>
+                <button type="submit">게시</button>
+            </form>
+        </div>
+        <a href="/auth/logout">로그아웃</a>
+        <% } else { %>
+
+            <a href="/auth">회원가입</a>
+            <a href="/auth/login">로그인</a>
+
+
+            <% } %>
 </body>
 
 </html>

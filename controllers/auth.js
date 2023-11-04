@@ -1,37 +1,50 @@
 const User = require('../models/user');
+const passport = require('passport');
 const bcrypt = require('bcrypt');
 
-exports.login = async (req, res) => {
+exports.register = async (req, res, next) => {
+    const { username, email, password } = req.body;
     try {
-        const { email, password } = req.body;
-
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.send('해당 이메일의 사용자를 찾을 수 없습니다.');
-        } else {
-            bcrypt.compare(password, user.password, function (err, match) {
-                if (err) {
-                    return next(err);
-                }
-                if (!match) {
-                    return res.status(401).json({ messagE: '비밀번호가 일치하지 않습니다.' });
-                }
-                res.redirect('/');
-            });
+        const exUser = await User.findOne({ email });
+        if (exUser) {
+            return res.send('이미 회원이 존재합니다.');
         }
-    } catch (err) {
-        console.error(err);
-        res.send('로그인 오류');
+        const hash = await bcrypt.hash(password, 12);
+        const newUser = new User({
+            username,
+            email,
+            password: hash,
+        });
+
+        await newUser.save();
+        res.redirect('/');
+    } catch (error) {
+        console.error(error);
+        next(error);
     }
+}
+
+exports.login = (req, res, next) => {
+    passport.authenticate('local', (authError, user, info) => {
+        if (authError) {
+            console.error(authError);
+            return next(authError);
+        }
+        if (!user) {
+            return res.redirect(`/?error=${info.message}`);
+        }
+        return req.login(user, (loginError) => {
+            if (loginError) {
+                console.error(loginError);
+                return next(loginError);
+            }
+            return res.redirect('/');
+        })
+    })(req, res, next);
 };
 
 exports.logout = (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            console.error('세션 제거 오류: ', err);
-            res.send('로그아웃 실패');
-        } else {
-            res.send('로그아웃 성공');
-        }
-    })
+    req.logout(() => {
+        res.redirect('/');
+    });
 }
