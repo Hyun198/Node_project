@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const bcrypt = require('bcrypt');
 
 exports.login = async (req, res) => {
     try {
@@ -8,14 +9,15 @@ exports.login = async (req, res) => {
         if (!user) {
             return res.send('해당 이메일의 사용자를 찾을 수 없습니다.');
         } else {
-            const isPasswordValid = await user.comparePassword(password);
-            if (isPasswordValid) {
-                req.session.user = user;
-                console.log('로그인 성공');
+            bcrypt.compare(password, user.password, function (err, match) {
+                if (err) {
+                    return next(err);
+                }
+                if (!match) {
+                    return res.status(401).json({ messagE: '비밀번호가 일치하지 않습니다.' });
+                }
                 res.redirect('/');
-            } else {
-                res.send('비밀번호 불일치');
-            }
+            });
         }
     } catch (err) {
         console.error(err);
