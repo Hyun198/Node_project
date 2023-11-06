@@ -9,8 +9,9 @@
 
 <body>
     <% if (username) { %>
+        <h1>안녕하세요 <%=username %>!</h1>
         <div class="form-container">
-            <form action="/create-post" method="POST">
+            <form action="/post/create-post" method="POST">
                 <label for="title">제목:</label>
                 <input type="text" name="title" id="title" required>
 
@@ -21,6 +22,7 @@
             </form>
         </div>
         <a href="/auth/logout">로그아웃</a>
+        <a href="/post/posts">게시글 목록</a>
         <% } else { %>
             <h1>로그인이 필요합니다.</h1>
             <a href="/auth/register">회원가입</a>

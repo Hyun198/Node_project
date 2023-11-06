@@ -1,5 +1,5 @@
 const express = require('express');
-const { renderMain, renderLogin, renderRegister } = require('../controllers/page');
+const { renderMain, renderLogin, renderRegister, renderPosts } = require('../controllers/page');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
 
 const router = express.Router();
@@ -9,10 +9,12 @@ router.use((req, res, next) => {
     next();
 });
 
+router.get('/', renderMain);
+
 router.get('/auth/register', renderRegister, isNotLoggedIn);
 
 router.get('/auth/login', renderLogin);
 
-router.get('/', renderMain);
+router.get('/post/posts', renderPosts, isLoggedIn);
 
 module.exports = router;

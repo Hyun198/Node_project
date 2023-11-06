@@ -8,7 +8,7 @@ const passportConfig = require('./passport');
 const dotenv = require('dotenv');
 const pageRouter = require('./routes/page');
 const authRouter = require('./routes/auth');
-
+const postRouter = require('./routes/post');
 
 dotenv.config();
 const app = express();
@@ -33,6 +33,7 @@ connectDB();
 //route setup
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
+app.use('/post', postRouter);
 
 
 
