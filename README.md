@@ -4,15 +4,15 @@
 
 ## middlewares
 
-    login, logout
+    index(login, logout)
 
 ## routes
 
-    auth, main
+    auth, page, post
 
 ## views
 
-    login , register, main
+    login , register, main, posts
 
 ## public
 
