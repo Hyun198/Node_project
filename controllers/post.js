@@ -6,6 +6,7 @@ exports.createPost = async (req, res, next) => {
         const newPost = new Post({
             title,
             desc,
+            author: req.user._id
         });
 
         await newPost.save();

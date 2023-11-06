@@ -18,8 +18,13 @@ exports.renderLogin = (req, res) => {
 
 exports.renderPosts = async (req, res) => {
     try {
-        const posts = await Post.find();
-        res.render('posts', { posts });
+        await Post.find().populate('author').exec()
+            .then(posts => {
+                res.render('posts', { posts })
+                    .catch(err => {
+                        console.error(err);
+                    })
+            });
     } catch (err) {
         console.error(err);
         res.send('게시글 목록을 불러오는 중 오류 발생');
