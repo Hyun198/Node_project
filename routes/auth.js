@@ -4,6 +4,7 @@ const authController = require('../controllers/auth');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares/login_logout');
 const { renderMain } = require('../controllers/page');
 
+
 router.get('/register', (req, res) => {
     res.render('register');
 });

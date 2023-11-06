@@ -27,4 +27,4 @@ module.exports = () => {
             next(err);
         }
     }));
-}
+};

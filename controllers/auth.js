@@ -1,7 +1,9 @@
 const User = require('../models/user');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const LocalStrategy = require('../passport/localStrategy');
 
+passport.use('local', LocalStrategy);
 
 exports.register = async (req, res, next) => {
     const { username, email, password } = req.body;
