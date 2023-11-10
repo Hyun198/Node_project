@@ -14,7 +14,9 @@ exports.renderRegister = (req, res) => {
 exports.renderLogin = (req, res) => {
     res.render('login');
 }
-
+exports.rendercreatePost = (req, res) => {
+    res.render('createPost');
+}
 
 exports.renderPosts = async (req, res) => {
     try {

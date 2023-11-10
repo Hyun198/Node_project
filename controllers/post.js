@@ -3,19 +3,7 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const uploadDir = 'public/uploads/';
-
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir);
-        }
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
-});
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage: storage });
 
@@ -26,13 +14,16 @@ exports.createPost = upload.single('img'), async (req, res, next) => {
         const newPost = new Post({
             title,
             desc,
-            img: req.file.buffer,
+            img: {
+                data: req.file.buffer,
+                contentType: req.file.mimetype
+            },
             author: req.user._id
         });
 
         await newPost.save();
 
-        res.redirect('/post/posts');
+        res.send("게시글 생성 성공");
     } catch (error) {
         console.error(error);
         next(error);

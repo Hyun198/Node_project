@@ -11,15 +11,12 @@
     <% if (username) { %>
         <h1>안녕하세요 <%=username %>!</h1>
         <div class="form-container">
-            <form action="/post/create-post" method="POST" enctype="multipart/form-data">
+            <form action="/post/create" method="POST">
                 <label for="title">제목:</label>
                 <input type="text" name="title" id="title" required>
 
                 <label for="desc">본문:</label>
                 <textarea name="desc" id="desc" required></textarea>
-
-                <label for="img">이미지:</label>
-                <input type="file" name="img" id="img">
 
                 <button type="submit">게시</button>
             </form>
@@ -28,8 +25,8 @@
         <a href="/post/posts">게시글 목록</a>
         <% } else { %>
             <h1>로그인이 필요합니다.</h1>
-            <a href="/auth/register">회원가입</a>
-            <a href="/auth/login">로그인</a>
+            <a href="/register">회원가입</a>
+            <a href="/login">로그인</a>
             <% } %>
 
 </body>

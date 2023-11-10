@@ -5,9 +5,9 @@ const { renderMain } = require('../controllers/page');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
 
 
-router.get('/', isNotLoggedIn, renderMain);
+router.get('/create', isLoggedIn);
 
-router.post('/create-post', createPost, isLoggedIn);
+router.post('/create', createPost, isLoggedIn);
 
 
 module.exports = router;
