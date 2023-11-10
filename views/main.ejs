@@ -11,12 +11,15 @@
     <% if (username) { %>
         <h1>안녕하세요 <%=username %>!</h1>
         <div class="form-container">
-            <form action="/post/create-post" method="POST">
+            <form action="/post/create-post" method="POST" enctype="multipart/form-data">
                 <label for="title">제목:</label>
                 <input type="text" name="title" id="title" required>
 
                 <label for="desc">본문:</label>
                 <textarea name="desc" id="desc" required></textarea>
+
+                <label for="img">이미지:</label>
+                <input type="file" name="img" id="img">
 
                 <button type="submit">게시</button>
             </form>
